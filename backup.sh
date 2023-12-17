@@ -28,10 +28,21 @@ cd $SOURCE_DIR
 # Use tar combined with zstd to create a compressed backup
 if tar cf - . | pzstd -9 > "${DEST_DIR}${BACKUP_FILE}"; then
     echo "Backup created successfully: ${DEST_DIR}${BACKUP_FILE}"
+    check_integrity "${DEST_DIR}${BACKUP_FILE}"
 else
     echo "Backup failed."
     exit 2
 fi
+
+check_integrity() {
+    echo "Checking integrity of $1"
+    if zstd -t $1; then
+        echo "Integrity check passed for $1"
+    else
+        echo "Integrity check failed for $1"
+        exit 3
+    fi
+}
 
 # Optional: Cleanup older backups
 # Uncomment the line below and adjust DAYS to your preference
