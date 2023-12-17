@@ -1,1 +1,4 @@
 .aider*
+# Add the files or directories you want to ignore here
+# For example, to ignore all .pyc files, you would add:
+# *.pyc
