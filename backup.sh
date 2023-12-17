@@ -22,6 +22,16 @@ if [ ! -d "$DEST_DIR" ]; then
     mkdir -p "$DEST_DIR"
 fi
 
+check_integrity() {
+    echo "Checking integrity of $1"
+    if zstd -t $1; then
+        echo "Integrity check passed for $1"
+    else
+        echo "Integrity check failed for $1"
+        exit 3
+    fi
+}
+
 # Navigate to the source directory
 cd $SOURCE_DIR
 
@@ -33,16 +43,6 @@ else
     echo "Backup failed."
     exit 2
 fi
-
-check_integrity() {
-    echo "Checking integrity of $1"
-    if zstd -t $1; then
-        echo "Integrity check passed for $1"
-    else
-        echo "Integrity check failed for $1"
-        exit 3
-    fi
-}
 
 # Optional: Cleanup older backups
 # Uncomment the line below and adjust DAYS to your preference
