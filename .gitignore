@@ -7,3 +7,5 @@
 *.go
 # Ignore Go binaries
 /bin/
+# Ignore compiled executable
+backup
